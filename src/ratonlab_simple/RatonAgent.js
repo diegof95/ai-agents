@@ -4,7 +4,7 @@ const Agent = require('../core/Agent');
  * Simple reflex agent. Search for an object whithin a labyrinth. 
  * If the object is found the agen take it.
  */
-class CleanerAgent extends Agent {
+class RatonAgent extends Agent {
     constructor(value) {
         super(value);
         //LEFT, UP, RIGHT, DOWN, CELL
@@ -12,7 +12,7 @@ class CleanerAgent extends Agent {
             "0,0,0,0,0": "UP",
             "0,0,0,1,0": "UP",
             "0,0,1,0,0": "UP",
-            "0,0,1,1,0": "LEFT",
+            "0,0,1,1,0": "UP",
             "0,1,0,0,0": "LEFT",
             "0,1,0,1,0": "RIGHT",
             "0,1,1,0,0": "LEFT",
@@ -43,8 +43,9 @@ class CleanerAgent extends Agent {
         } else {
             return this.table["default"];
         }
+
     }
 
 }
 
-module.exports = CleanerAgent;
+module.exports = RatonAgent;

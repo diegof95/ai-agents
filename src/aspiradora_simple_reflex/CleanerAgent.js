@@ -9,10 +9,12 @@ class CleanerAgent extends Agent {
     super(value);
     // Actions: Left, Right, Suck up dirt
     this.actions = ["L", "R", "S"]
+  }
+
+  setup(initialState={}) {
     /*
     Actions table
-    Key => "agentPos,worldPositionState"
-    */
+    Key => "agentPos,worldPositionState"*/
     this.table = {
       "0,0": this.actions[1],
       "1,0": this.actions[0],
@@ -20,10 +22,6 @@ class CleanerAgent extends Agent {
       "1,1": this.actions[2],
       "default": this.actions[2]
     }
-  }
-
-  setup(initialState={}) {
-
   }
 
     //[1, [1, 1]]
@@ -34,6 +32,8 @@ class CleanerAgent extends Agent {
      */
   send() {
 
+    /* We take from the percept the agent posc and
+    the state of that square as key for the look up in the table*/
     let agentPos = this.perception[0]
     let posState = this.perception[1][agentPos]
     return this.table[agentPos+","+posState]

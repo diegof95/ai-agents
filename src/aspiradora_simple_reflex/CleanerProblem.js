@@ -47,8 +47,7 @@ class CleanerProblem extends Problem {
 
     /**
      * Gives the world representation for the agent at the current stage.
-     * Notice that the agent don't have access to the whole labyrinth. It only "see"
-     * the cell around and under it. 
+     * The agent perceipt includes the state of each world square. 
      * @param {*} agentID
      * @returns and object with the information to be sent to the agent
      */

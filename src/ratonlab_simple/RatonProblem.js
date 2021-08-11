@@ -3,7 +3,7 @@ const Problem = require('../core/Problem');
 /**
  * Simple reflex agent problem. Define a problem to be solved by a simple reflex agent 
  */
-class CleanerProblem extends Problem {
+class RatonProblem extends Problem {
     constructor(args) {
         super(args);
         this.env = args;
@@ -99,7 +99,7 @@ class CleanerProblem extends Problem {
     }*/
 }
 
-module.exports = CleanerProblem;
+module.exports = RatonProblem;
 
 
 function min(data) {
