@@ -4,7 +4,7 @@ const Agent = require('../core/Agent');
  * Simple reflex agent. Search for an object whithin a labyrinth. 
  * If the object is found the agen take it.
  */
-class CleanerAgent extends Agent {
+class RatonAgent extends Agent {
     constructor(value) {
         super(value);
         //LEFT, UP, RIGHT, DOWN, CELL
@@ -29,6 +29,8 @@ class CleanerAgent extends Agent {
     }
 
   setup(initialState={}) {
+    console.log('initialState: '+ JSON.stringify(initialState));
+
     this.internalState = {
         lastAction: "NONE",
     };
@@ -39,6 +41,7 @@ class CleanerAgent extends Agent {
      * In this case, the state is just obtained as the join of the perceptions
      */
     send() {
+        console.log('perception: '+ JSON.stringify(this.perception));
         let action = this.selectAction(this.internalState, this.perception)
         this.internalState.lastAction = action;
         console.log('lastAction: '+ this.internalState.lastAction)
@@ -113,4 +116,4 @@ class CleanerAgent extends Agent {
 
 }
 
-module.exports = CleanerAgent;
+module.exports = RatonAgent;
