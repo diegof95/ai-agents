@@ -12,7 +12,7 @@ class RatonAgent extends Agent {
             "0,0,0,0,0": "UP",
             "0,0,0,1,0": "UP",
             "0,0,1,0,0": "UP",
-            "0,0,1,1,0": "LEFT",
+            "0,0,1,1,0": "UP",
             "0,1,0,0,0": "LEFT",
             "0,1,0,1,0": "RIGHT",
             "0,1,1,0,0": "LEFT",
@@ -28,11 +28,10 @@ class RatonAgent extends Agent {
         };
     }
 
-  setup(initialState={}) {
-    console.log('initialState: '+ JSON.stringify(initialState));
-
-    this.internalState = {
-        lastAction: "NONE",
+    setup(initialState={}) {
+        // We save agents last action
+        this.internalState = {
+            lastAction: "NONE",
     };
   }
 
@@ -41,77 +40,38 @@ class RatonAgent extends Agent {
      * In this case, the state is just obtained as the join of the perceptions
      */
     send() {
-        console.log('perception: '+ JSON.stringify(this.perception));
-        let action = this.selectAction(this.internalState, this.perception)
-        this.internalState.lastAction = action;
-        console.log('lastAction: '+ this.internalState.lastAction)
-        return action;
-    }
 
-    selectAction(state, perception){
+        // We prevent the agent from returning by blocking
+        // the path from where he came by altering perception 
+        switch(this.internalState.lastAction) {
+            case "LEFT":
+                this.perception[2] = 1;
+                break;
+            case "UP":
+                this.perception[3] = 1;
+                break;
+            case "RIGHT":
+                this.perception[0] = 1;
+                break;
+            case "DOWN":
+                this.perception[1] = 1;
+                break;
+        }
 
-        let lastAction = state.lastAction;
-        let viewKey = perception.join();
+        let viewKey = this.perception.join();
         let action;
-        
+
+        // If perceives cheese or its blocked in all directions,
+        // takes, otherwise selects moving action
         if (this.table[viewKey]) {
             action = this.table[viewKey];
-        }
-        else {
+        } else {
             action = this.table["default"];
-            return action;
         }
-        console.log('isContrary: '+ this.isContrary(lastAction, action))
-        if(this.isContrary(lastAction, action)){
-            action = this.selectRandomAction(lastAction);
-        }
-
-        return action
-    }
-
-    isContrary(lastAction, action){
-
-        if(action == "LEFT" && lastAction != "RIGHT"){
-            return false;
-        }
-        if(action == "UP" && lastAction != "DOWN"){
-            return false;
-        }
-        if(action == "RIGHT" && lastAction != "LEFT"){
-            return false;
-        }
-        if(action == "DOWN" && lastAction != "UP"){
-            return false;
-        }
-        if(lastAction == "NONE"){
-            return false;
-        }
-        return true;
-    }
-
-    selectRandomAction(lastAction){
-        
-        let rand = Math.random();
-        let action;
-        switch(true){
-            case (rand < 0.25):
-                action = "LEFT";
-                break;
-            case (rand >= 0.25 && rand < 0.5):
-                action = "UP";
-                break;
-            case (rand >= 0.5 && rand < 0.75):
-                action = "RIGHT";
-                break;
-            case (rand >= 0.75):
-                action = "DOWN";
-                break;
-
-            if (action == lastAction){
-                action = selectRandomAction(action);
-            }
-        }
+        // We update last action
+        this.internalState.lastAction = action;
         return action;
+
     }
 
 }
