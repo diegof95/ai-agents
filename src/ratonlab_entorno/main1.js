@@ -1,5 +1,5 @@
 const RatonProblem = require('./RatonProblem');
-const RatonAgent = require('./RatonAgent2');
+const RatonAgent = require('./RatonAgente2');
 
 let myProblem = new RatonProblem({ maxIterations: 12 });
 

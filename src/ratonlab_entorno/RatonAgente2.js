@@ -37,7 +37,6 @@ class RatonAgent extends Agent {
             worldLog: Array(15).fill().map(() => Array(15).fill(0)),
             actualPos: initialState
         };
-        console.log(initialState)
         let x = initialState.x;
         let y = initialState.y;
         this.internalState.worldLog[y][x] = 1;
